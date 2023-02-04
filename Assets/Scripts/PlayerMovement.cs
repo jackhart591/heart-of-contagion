@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private Transform shootingRange;
     public List<GameObject> collidingObjs;
     public float maxGunRange = 8f;
+    public float gunDamage = 1f;
+    public float cooldown = 0.8f;
 
     private float horizontal;
     private float speed = 8f;
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour {
         float rotz = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg - 90;
 
         playerLight.rotation = Quaternion.Euler(0, 0, rotz);
+        cooldown -= Time.deltaTime;
     }
 
     public void Jump(InputAction.CallbackContext ctx) {
@@ -63,9 +66,14 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void Shoot(InputAction.CallbackContext ctx) {
-        foreach(GameObject obj in collidingObjs) {
-            if (Physics2D.Raycast(transform.position, (transform.position - obj.transform.position), maxGunRange))
-                Debug.Log("Hit!");
-        }
+        try {
+            foreach(GameObject obj in collidingObjs) {
+                if (Physics2D.Raycast(transform.position, (transform.position - obj.transform.position), maxGunRange))
+                    if (obj.TryGetComponent(out EnemyMain script) && cooldown <= 0) {
+                        script.Damage(gunDamage);
+                        cooldown = 0.8f;
+                    }
+            }
+        } catch {}
     }
 }

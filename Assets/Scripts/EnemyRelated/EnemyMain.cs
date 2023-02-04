@@ -7,7 +7,7 @@ public class EnemyMain : MonoBehaviour
     // This determines health and collisions for enemy characters
     // very general so can be applied to ANY enemy
 
-    [SerializeField] int HealthVal = 3;
+    [SerializeField] float HealthVal = 3;
    public bool invincible = false;
     void Start()
     {
@@ -44,6 +44,11 @@ public class EnemyMain : MonoBehaviour
             }
             
         }
+    }
+
+    public void Damage(float damage) {
+        HealthVal -= damage;
+        Hurt();
     }
 
     void Hurt()
