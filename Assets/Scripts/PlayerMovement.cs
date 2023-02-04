@@ -5,10 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public Rigidbody2D rb;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
-    public Transform playerLight;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform playerLight;
+    [SerializeField] private Transform shootingRange;
+    public List<GameObject> collidingObjs;
+    public float maxGunRange = 8f;
 
     private float horizontal;
     private float speed = 8f;
@@ -57,5 +60,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Move(InputAction.CallbackContext ctx) {
         horizontal = ctx.ReadValue<Vector2>().x;
+    }
+
+    public void Shoot(InputAction.CallbackContext ctx) {
+        foreach(GameObject obj in collidingObjs) {
+            if (Physics2D.Raycast(transform.position, (transform.position - obj.transform.position), maxGunRange))
+                Debug.Log("Hit!");
+        }
     }
 }
