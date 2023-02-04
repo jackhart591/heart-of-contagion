@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public Transform playerLight;
 
     private float horizontal;
     private float speed = 8f;
@@ -22,6 +23,13 @@ public class PlayerMovement : MonoBehaviour {
         } else if (isFacingRight && horizontal < 0f) {
             Flip();
         }
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        
+        Vector3 rotation = mousePos - playerLight.position;
+        float rotz = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg - 90;
+
+        playerLight.rotation = Quaternion.Euler(0, 0, rotz);
     }
 
     public void Jump(InputAction.CallbackContext ctx) {
