@@ -9,9 +9,9 @@ public class PlrHealth : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] bool db = false;
-    [SerializeField] int MaxHealth = 5;
+    [SerializeField] float MaxHealth = 5f;
     private bool dead = false;
-    [SerializeField] int Health;
+    [SerializeField] float Health;
     [SerializeField] SpriteRenderer spritey;
     //EventSystem Esys;
 
@@ -20,6 +20,7 @@ public class PlrHealth : MonoBehaviour
     {
         Health = MaxHealth;
     }
+
     private void Hurt()
     {
         if(Health > 1)
@@ -37,11 +38,22 @@ public class PlrHealth : MonoBehaviour
 
 
     }
-    public int GetHealth()
+
+    public float GetHealth()
     {
         return Health;
 
     }
+
+    public void GainHealth(float gain) {
+        Health = ((Health+gain) > MaxHealth) ? MaxHealth : Health+gain;
+    }
+
+    public void Damage(float dam) {
+        Health -= dam;
+        Hurt();
+    }
+
      void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer == 6)
