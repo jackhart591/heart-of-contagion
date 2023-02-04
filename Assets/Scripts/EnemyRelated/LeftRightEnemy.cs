@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class LeftRightEnemy : MonoBehaviour
 {
-    // Enemy script that moves left and right
+    // Enemy script that moves left and right.. with a player detection system as well.
     [SerializeField] float speed = 3f;
+    [SerializeField] float AgroRange = 3f;
+
     [SerializeField] GameObject plr;
     public Rigidbody2D rb;
     public LayerMask groundLayers;
     public Transform checkerObject;
     bool canFlip = false;
     bool facingRight = true; // just a really strange way of flipping the sprite
-
+    [SerializeField] int AIType = 0; // simple AI types for player actions
     RaycastHit2D hit; // the raycast shot from the checkerObject
 
     void Start()
@@ -24,7 +26,10 @@ public class LeftRightEnemy : MonoBehaviour
     void Update()
     {
         hit = Physics2D.Raycast(checkerObject.position, -transform.up, 1f, groundLayers);
-
+        if (plr != null)
+        {
+            IfPlayerSpotted(AgroRange);
+        }
     }
     private void FixedUpdate()
     {
@@ -66,5 +71,22 @@ public class LeftRightEnemy : MonoBehaviour
             gameObject.transform.localScale = CurrentScale;
         }
     }
+    void IfPlayerSpotted(float AgroRange) // for special abilities, such as shooting or special attacks
+    {
+        float dist = Vector2.Distance(plr.transform.position, gameObject.transform.position);
+        if(dist <= AgroRange)
+        {
+            switch (AIType)
+            {
 
+
+                case 0:
+                    Debug.Log("Spotted");
+                    break;
+            }
+
+        }
+
+
+    }
 }

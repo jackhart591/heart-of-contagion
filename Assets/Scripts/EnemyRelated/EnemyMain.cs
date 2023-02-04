@@ -19,6 +19,19 @@ public class EnemyMain : MonoBehaviour
     {
         
     }
+    private void OnParticleCollision(GameObject other)
+    {
+        if(other.layer == 8)
+        {
+            Debug.Log("Hit By Weapon");
+            if (invincible == false)
+            {
+                Hurt();
+
+            }
+
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision) // when the enemy is hit by a player bullet
     {
         if(collision.gameObject.tag == "PlayerWeapon")
