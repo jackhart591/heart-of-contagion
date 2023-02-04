@@ -5,11 +5,11 @@ using UnityEngine;
 public class CollisionDetection : MonoBehaviour {
     public PlayerMovement player;
 
-    void OnTriggerEnter(Collider col) {
+    void OnTriggerEnter2D(Collider2D col) {
         player.collidingObjs.Add(col.gameObject);
     }
 
-    void OnTriggerExit(Collider col) {
+    void OnTriggerExit2D(Collider2D col) {
         try {
             player.collidingObjs.Remove(col.gameObject);
         } catch {}
