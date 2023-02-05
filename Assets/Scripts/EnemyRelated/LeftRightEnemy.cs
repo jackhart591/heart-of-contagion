@@ -7,7 +7,7 @@ public class LeftRightEnemy : MonoBehaviour
     // Enemy script that moves left and right.. with a player detection system as well.
     [SerializeField] float speed = 3f;
     [SerializeField] float AgroRange = 3f;
-
+    private float OGSpeed;
     [SerializeField] GameObject plr;
     public Rigidbody2D rb;
     public LayerMask groundLayers;
@@ -19,7 +19,7 @@ public class LeftRightEnemy : MonoBehaviour
 
     void Start()
     {
-        
+        OGSpeed = speed;
     }
 
     // Update is called once per frame
@@ -82,6 +82,26 @@ public class LeftRightEnemy : MonoBehaviour
 
                 case 0:
                     Debug.Log("Spotted");
+                    break;
+                case 1:
+                    speed = OGSpeed * 2f;
+
+                    break;
+            }
+
+        }
+        else
+        {
+            switch (AIType)
+            {
+
+
+                case 0:
+                    Debug.Log("Not spotted");
+                    break;
+                case 1:
+                    speed = OGSpeed;
+
                     break;
             }
 
