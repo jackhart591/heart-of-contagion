@@ -14,13 +14,19 @@ public class PlayerMovement : MonoBehaviour {
     public float maxGunRange = 8f;
     public float gunDamage = 1f;
     public float cooldown = 0.8f;
+    public Vector3 checkpoint;
 
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
+
+    private void Start() {
+        if (Persistent.PlayerCheckpoint != Vector3.zero)
+            transform.position = Persistent.PlayerCheckpoint;
+    }
     
-    void Update() {
+    private void Update() {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
 
         if (!isFacingRight && horizontal > 0f) {

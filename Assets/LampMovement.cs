@@ -8,7 +8,7 @@ public class LampMovement : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField] int AIType = 0; // default is 0- nothing
-    [SerializeField] Light2D light;
+    [SerializeField] Light2D lightInst;
     [SerializeField] float MaxDist;
     [SerializeField] float speed;
     private Rigidbody2D rb;
