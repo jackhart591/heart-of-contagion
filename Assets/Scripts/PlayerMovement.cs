@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
     public float cooldown = 0.8f;
     public Vector3 checkpoint;
     public bool inRoot;
-
+    public bool RootPower = false;
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 16f;
@@ -48,7 +49,21 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Jump(InputAction.CallbackContext ctx) {
         if (ctx.performed && IsGrounded()) {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            if(RootPower == true)
+            {
+
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower * 3);
+                RootPower = false;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
+
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+
+            }
+            
         }
 
         if (ctx.canceled && rb.velocity.y > 0f) {

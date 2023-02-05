@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthGainAmount: 3
+  AITYPE: 1
 --- !u!50 &1253755109164865144
 Rigidbody2D:
   serializedVersion: 4
