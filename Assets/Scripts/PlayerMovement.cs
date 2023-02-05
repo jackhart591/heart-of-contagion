@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     private float speed = 8f;
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
+    private bool shooting = false;
 
     private void Start() {
         if (Persistent.PlayerCheckpoint != Vector3.zero)
@@ -73,14 +74,32 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public void Shoot(InputAction.CallbackContext ctx) {
-        try {
-            foreach(GameObject obj in collidingObjs) {
+        StartCoroutine(ShootInternal(ctx));
+    }
+
+    private IEnumerator ShootInternal(InputAction.CallbackContext ctx) {
+        if (shooting) {
+            yield break;
+        }
+
+        List<GameObject> objectsTemp = new List<GameObject>();
+
+        foreach (GameObject obj in collidingObjs) {
+            objectsTemp.Add(obj);
+        }
+
+        shooting = true;
+        if (cooldown <= 0) {
+            GetComponent<AudioSource>().Play();
+            foreach(GameObject obj in objectsTemp) {
                 if (Physics2D.Raycast(transform.position, (transform.position - obj.transform.position), maxGunRange))
                     if (obj.TryGetComponent(out EnemyMain script) && cooldown <= 0) {
                         script.Damage(gunDamage);
-                        cooldown = 0.8f;
                     }
+
             }
-        } catch {}
+            yield return new WaitForSeconds(0.8f);
+        }
+        shooting = false;
     }
 }
