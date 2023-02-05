@@ -114,7 +114,7 @@ public class PlrHealth : MonoBehaviour
             Instantiate(Platform, pos, Quaternion.identity, deathHandler.transform);
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(1);
     }
     IEnumerator invinciblity()
     {
