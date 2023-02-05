@@ -84,7 +84,7 @@ public class LeftRightEnemy : MonoBehaviour
                     Debug.Log("Spotted");
                     break;
                 case 1:
-                    speed = OGSpeed * 2f;
+                    speed = OGSpeed * 3f;
 
                     break;
             }

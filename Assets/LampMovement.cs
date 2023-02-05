@@ -48,14 +48,13 @@ public class LampMovement : MonoBehaviour
 
     public void LerpMovement()
     {
-        Debug.Log("MOVING");
         float value = Mathf.Lerp(-MaxDist * speed, MaxDist * speed, Mathf.PingPong(Time.time / (3 / speed), 1));
         rb.velocity = new Vector2(value, rb.velocity.y);
     }
 
     public void RotoMover()
     {
-        Debug.Log("MOVING");
+
         float value = Mathf.Lerp(130, 230, Mathf.PingPong(Time.time / (3 / speed), 1));
         gameObject.transform.localEulerAngles = new Vector3(0,0, value);
     }

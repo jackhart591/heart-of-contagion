@@ -12,46 +12,76 @@ public class BirdEnemy : MonoBehaviour
     private bool ActiveAbility = false;
     [SerializeField] float AgroRange = 10f;
     [SerializeField] GameObject player;
+    [SerializeField] int AIType = 0;
 
-
-
+    private bool flipped = false;
+    private bool activated = false;
     [SerializeField] float MaxDist;
     [SerializeField] float speed;
 
-    
       
         private void Start()
     {
+
             if (gameObject.transform.localScale.x < 0)
             {
                 Debug.Log("WRONG");
                 FlipVal = -FlipVal;
             }
             rb = gameObject.GetComponent<Rigidbody2D>();
+        StartCoroutine(StarterActive());
     }
-    private void Update()
+    IEnumerator StarterActive()
     {
-        
+
+
+
+        yield return new WaitForSeconds(Random.RandomRange(1f, 5f));
+        activated = true;
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (player)
+        if (player && activated)
         {
-            float disty = Vector2.Distance(new Vector2(gameObject.transform.position.x, 0), new Vector2(player.transform.position.x, 0));
 
-            if (usedAbility == false && disty <= AgroRange)
-            {
-                usedAbility = true;
-                ActiveAbility = true;
-                StartCoroutine(FollowArc(gameObject.transform, gameObject.transform.position, gameObject.transform.position + new Vector3(-9f * FlipVal, 0, 0), 2, .6f));
-            }
-            else if (ActiveAbility == false)
+            switch (AIType)
             {
 
-                LerpMovement();
 
+
+                case (0):
+                    float disty = Vector2.Distance(new Vector2(gameObject.transform.position.x, 0), new Vector2(player.transform.position.x, 0));
+
+                    if (usedAbility == false && disty <= AgroRange)
+                    {
+                        usedAbility = true;
+                        ActiveAbility = true;
+                        StartCoroutine(FollowArc(gameObject.transform, gameObject.transform.position, gameObject.transform.position + new Vector3(-9f * FlipVal, 0, 0), 2, .6f));
+                    }
+                    else if (ActiveAbility == false)
+                    {
+
+                        LerpMovement();
+
+                    }
+
+                    break;
+
+                case (1):
+
+                   
+                        LerpMovement();
+
+                   
+
+                    break;
+
+                default:
+
+                    break;
             }
+          
 
 
 
@@ -59,9 +89,31 @@ public class BirdEnemy : MonoBehaviour
     }
     public void LerpMovement()
     {
-        Debug.Log("MOVING");
         float value = Mathf.Lerp(-MaxDist * speed, MaxDist * speed, Mathf.PingPong(Time.time / (3 / speed), 1));
         rb.velocity = new Vector2(value, rb.velocity.y);
+        if(AIType == 1)
+        {
+            if (Mathf.Abs(rb.velocity.x) <= 1 && flipped == false)
+            {
+                flipped = true;
+                Debug.Log("EEEEE");
+                StartCoroutine(flipCooldown());
+                gameObject.GetComponent<SpriteRenderer>().flipX = !gameObject.GetComponent<SpriteRenderer>().flipX;
+            }
+
+        }
+        
+    }
+
+    IEnumerator flipCooldown()
+    {
+
+        yield return new WaitForSeconds(1f);
+
+        flipped = false;
+
+
+
     }
     IEnumerator FollowArc(
        Transform mover,

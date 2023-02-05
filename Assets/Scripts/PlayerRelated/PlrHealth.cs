@@ -56,7 +56,7 @@ public class PlrHealth : MonoBehaviour
 
      void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 6)
+        if(collision.gameObject.layer == 6 || collision.gameObject.layer == 7)
         {
            
 
@@ -70,7 +70,22 @@ public class PlrHealth : MonoBehaviour
 
         }
     }
+    void OnTriggerEnter(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 6 || collision.gameObject.layer == 7)
+        {
 
+
+            if (db == false)
+            {
+                Debug.Log("OK");
+                Hurt();
+
+            }
+
+
+        }
+    }
     IEnumerator gameOver()
     {
 
@@ -100,7 +115,7 @@ public class PlrHealth : MonoBehaviour
         }
         yield return new WaitForSeconds(.4f);
 
-        gameObject.layer = 6;
+        gameObject.layer = default;
         db = false;
     }
 
