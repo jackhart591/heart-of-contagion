@@ -36,7 +36,7 @@ public class BirdEnemy : MonoBehaviour
 
 
 
-        yield return new WaitForSeconds(Random.RandomRange(1f, 5f));
+        yield return new WaitForSeconds(Random.Range(1f, 5f));
         activated = true;
     }
     // Update is called once per frame

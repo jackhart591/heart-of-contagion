@@ -5,9 +5,11 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour {
     
     private void Start() {
-        if (Persistent.usedCheckpoints.Contains(gameObject)) {
-            Destroy(gameObject);
-        }
+        try {
+            if (Persistent.usedCheckpoints.Contains(gameObject)) {
+                Destroy(gameObject);
+            }
+        } catch {}
     }
 
     void OnTriggerEnter2D(Collider2D col) {

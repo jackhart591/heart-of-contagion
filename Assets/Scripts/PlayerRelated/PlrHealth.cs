@@ -13,6 +13,9 @@ public class PlrHealth : MonoBehaviour
     private bool dead = false;
     [SerializeField] float Health;
     [SerializeField] SpriteRenderer spritey;
+    [SerializeField] private GameObject Platform;
+    [SerializeField] private GameObject Lantern;
+    [SerializeField] private GameObject deathHandler;
     //EventSystem Esys;
 
 
@@ -92,7 +95,25 @@ public class PlrHealth : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
+        bool isLantern = false;
+        bool isPlatform = false;
+        Vector3 pos = transform.position;
+
+        if (GetComponent<PlayerMovement>().IsGrounded()) {
+            isLantern = true;
+        } else if (GetComponent<PlayerMovement>().inRoot) {
+            isPlatform = true;
+        }
+
         yield return new WaitForSeconds(2f);
+        
+        if (isLantern) {
+            Instantiate(Lantern, pos, Quaternion.identity, deathHandler.transform);
+        } else if (isPlatform) {
+            Instantiate(Platform, pos, Quaternion.identity, deathHandler.transform);
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     IEnumerator invinciblity()
