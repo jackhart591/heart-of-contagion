@@ -73,22 +73,7 @@ public class PlrHealth : MonoBehaviour
 
         }
     }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 6 || collision.gameObject.layer == 7)
-        {
-
-
-            if (db == false)
-            {
-                Debug.Log("OK");
-                Hurt();
-
-            }
-
-
-        }
-    }
+   
     IEnumerator gameOver()
     {
 
