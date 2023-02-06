@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour {
             if(RootPower == true)
             {
 
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower * 3);
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower * 2);
                 RootPower = false;
                 gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 

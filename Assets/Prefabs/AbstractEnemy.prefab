@@ -186,7 +186,7 @@ MonoBehaviour:
   rb: {fileID: 4671665169674793313}
   groundLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1032
   checkerObject: {fileID: 4671665169638601354}
   AIType: 1
 --- !u!114 &4671665169674793324
